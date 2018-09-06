@@ -1,7 +1,7 @@
 #include "stm32f4xx.h"
 
 unsigned short delay_c = 0;
-unsigned short blink_delay = 1;
+unsigned short blink_delay = 500;
 unsigned short light = 0x1000;
 
 void SysTick_Handler(void){
