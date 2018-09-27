@@ -23,7 +23,7 @@ void EXTI0_IRQHandler(void){
 					light = light << 1;	
       
 				GPIO_ToggleBits(GPIOD, light);		
-		
+		for (int i = 0; i < 1000000; i++);
 		EXTI_ClearITPendingBit(EXTI_Line0);
 		/* here we clear the interrupt flag, otherwise the interrupt will be handled many times */
 	}
@@ -33,6 +33,8 @@ int main(void) {
 		initLeds();
     initButton();
 		initExtInterrupt();
+	
+	GPIO_ToggleBits(GPIOD, light);		
 	
     while (1) 
 		{
@@ -69,7 +71,7 @@ void initExtInterrupt() {
     SYSCFG_EXTILineConfig(EXTI_PortSourceGPIOA,EXTI_PinSource0);
     EXTI_InitStructure.EXTI_Line = EXTI_Line0;
     EXTI_InitStructure.EXTI_Mode = EXTI_Mode_Interrupt;
-    EXTI_InitStructure.EXTI_Trigger = EXTI_Trigger_Rising;
+    EXTI_InitStructure.EXTI_Trigger =  EXTI_Trigger_Falling;
     EXTI_InitStructure.EXTI_LineCmd = ENABLE;
     EXTI_Init(&EXTI_InitStructure);
 
