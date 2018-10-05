@@ -15,7 +15,7 @@ unsigned short light = 0x1000;
 
 void EXTI0_IRQHandler(void){
 	if(EXTI_GetITStatus(EXTI_Line0) == SET) {
-	      GPIO_ToggleBits(GPIOD, light);		
+	      GPIO_ToggleBits(GPIOD, light);		//4
 		
 				if(light == 0x8000)
 					light = 0x1000;
@@ -55,20 +55,20 @@ void initLeds(){
 }
 
 void initButton() {
-    RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOA, ENABLE);
+    RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOA, ENABLE);//3
 
     GPIO_InitTypeDef gpio;
     GPIO_StructInit(&gpio);
     gpio.GPIO_Mode = GPIO_Mode_IN;
     gpio.GPIO_PuPd = GPIO_PuPd_NOPULL;
-    gpio.GPIO_Pin = GPIO_Pin_0;
-    GPIO_Init(GPIOD, &gpio);
+    gpio.GPIO_Pin = GPIO_Pin_0;//2
+    GPIO_Init(GPIOA, &gpio);//5
 }
 
 void initExtInterrupt() {
 
     RCC_APB2PeriphClockCmd(RCC_APB2Periph_SYSCFG, ENABLE);
-    SYSCFG_EXTILineConfig(EXTI_PortSourceGPIOA,EXTI_PinSource0);
+    SYSCFG_EXTILineConfig(EXTI_PortSourceGPIOA,EXTI_PinSource0);//1
     EXTI_InitStructure.EXTI_Line = EXTI_Line0;
     EXTI_InitStructure.EXTI_Mode = EXTI_Mode_Interrupt;
     EXTI_InitStructure.EXTI_Trigger =  EXTI_Trigger_Falling;
